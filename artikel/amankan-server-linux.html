@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amankan Server Linux dari Brute-Force — Server & Privasi</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <nav class="site">
+      <a href="../index.html">Beranda</a>
+      <a href="vps-gratis-selamanya.html">VPS Gratis</a>
+      <a href="amankan-server-linux.html">Amankan Server</a>
+    </nav>
+  </header>
+  <main>
+    <article>
+      <span class="tag">Keamanan</span>
+      <h1>5 Langkah Amanin Server Linux dari Serangan Brute-Force</h1>
+      <p class="meta">Update 2026</p>
+
+      <p>Server baru langsung kena scan bot dalam hitungan menit setelah online. Ini 5 langkah dasar yang wajib, urutan dari paling penting:</p>
+
+      <ol>
+        <li>
+          <strong>Jangan buka SSH ke internet umum.</strong> Kalau punya mesh VPN (Tailscale/WireGuard), batasi SSH cuma reachable dari situ:
+          <pre>firewall-cmd --zone=public --remove-service=ssh --permanent
+firewall-cmd --zone=trusted --change-interface=tailscale0 --permanent
+firewall-cmd --reload</pre>
+        </li>
+        <li>
+          <strong>Pasang fail2ban</strong> — auto-ban IP yang gagal login berkali-kali:
+          <pre>[sshd]
+enabled = true
+maxretry = 4
+bantime = 3600</pre>
+        </li>
+        <li><strong>Matiin login password, wajib SSH key.</strong> Password bisa di-bruteforce, key praktis nggak bisa.</li>
+        <li><strong>Kernel hardening dasar</strong> lewat sysctl: <code>kernel.kptr_restrict=1</code>, <code>net.ipv4.conf.all.rp_filter=1</code>, matiin ICMP redirect.</li>
+        <li><strong>Auto-update security patch.</strong> Kebanyakan breach itu lewat CVE lama yang harusnya udah dipatch berbulan-bulan sebelumnya.</li>
+      </ol>
+
+      <div class="cta">
+        Cari hosting yang firewall &amp; patch-nya udah dikelola provider (nggak perlu urus semua manual)?
+        <a href="#" id="affiliate-link">Lihat opsi managed hosting →</a>
+        <!-- TODO: ganti href di atas dengan link affiliate Niagahoster setelah akun affiliate disetujui -->
+      </div>
+    </article>
+  </main>
+  <footer>&copy; 2026 · Server &amp; Privasi</footer>
+</div>
+</body>
+</html>
